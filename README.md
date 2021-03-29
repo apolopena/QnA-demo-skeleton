@@ -1,1 +1,0 @@
-# QnA-demo-skeleton
