@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Form({ children, ...restProps }) {
+export default function Form ({ children, ...restProps }) {
   return <div {...restProps} >{children}</div>
 }
 
@@ -20,7 +20,7 @@ Form.Input = function FormInput({ children, ...restProps }) {
   return <input {...restProps}>{children}</input>
 }
 
-Form.TextArea = function FormInput({ children, ...restProps }) {
+Form.TextArea = function FormTextArea({ children, ...restProps }) {
   return <textarea {...restProps}>{children}</textarea>
 }
 

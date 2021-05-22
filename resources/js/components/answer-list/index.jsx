@@ -1,13 +1,13 @@
 import React from 'react'
 
 import './styles.css'
-import { AnswerListItem } from '../index'
+import { AnswerListItem } from '../../components'
 
 const AnswerList = ({ answers, isLoading }) => (
   <div className='card'>
     <div className='card-body'>
       {
-        answers.map(item => (
+        answers.map( (item) => (
           <React.Fragment key={item.id}>
             <AnswerListItem item={item} />
             <hr />

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 
 import './styles.css'
-import { Form } from '../index'
+import { Form } from '../../components'
 
 export default function QuestionForm() {
   const MIN = 5
@@ -11,7 +11,7 @@ export default function QuestionForm() {
   const [question, setQuestion] = useState('')
   const [error, setError] = useState('')
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     if (question == null || question.trim() === '') {
       setError('The question field is required.')
@@ -28,13 +28,9 @@ export default function QuestionForm() {
     post({ description: question })
   }
 
-  // it works.
   const post = (data) => {
     axios.post('/api/questions', data)
       .then(res => {
-        console.log(`response: ${JSON.stringify(res, null, 2)}`)
-        console.log(`STATUS: ${res.status}`)
-        console.log(`question_id: ${res.data.id}`)
         history.push(`/answers/${res.data.id}`)
       })
       .catch(err => setError(err))
@@ -47,15 +43,15 @@ export default function QuestionForm() {
           Ask a new question
         </Form.Title>
         <Form.TextArea
-          rows='2'
+          rows={2}
           className={
             error ? 'form-control form-control-lg mt-3 is-invalid' : 'form-control form-control-lg mt-3'
           }
           placeholder='What is the meaning of humane?'
           value={question}
           onChange={
-            ({ target }) => {
-              setQuestion(target.value)
+            (e) => {
+              setQuestion(e.target.value)
               setError('')
             }
           }

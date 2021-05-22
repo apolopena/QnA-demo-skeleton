@@ -4,7 +4,7 @@ import axios from 'axios'
 import './styles.css'
 
 import AnswerContext from '../../context/AnswerContext'
-import { Form } from '../index'
+import { Form } from '../../components'
 
 export default function AnswersForm({ questionId }) {
   const MIN = 5
@@ -12,7 +12,7 @@ export default function AnswersForm({ questionId }) {
   const [error, setError] = useState('')
   const { setAnswers } = useContext(AnswerContext)
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     if (answer == null || answer.trim() === '') {
       setError('The answer field is required.')
@@ -25,14 +25,25 @@ export default function AnswersForm({ questionId }) {
     post({ description: answer, question_id: questionId })
   }
 
-  // it works.
   const post = (data) => {
     axios.post('/api/answers', data)
       .then(res => {
         setAnswer('')
-        setAnswers(res.data)
+        setAnswers && setAnswers(res.data)
       })
-      .catch(err => setError(err))
+      .catch(err => {
+        const status = Number(err.message.match(/\b\d+/))
+        let culprit;
+        switch (status) {
+          case 405:
+            culprit = `: Bad Endpoint: ${err.config.url}`
+            break;
+          case 422:
+            culprit = `: Could Not Process Data: ${JSON.stringify(data)}`
+            break;
+        }
+        setError(`Internal Error: ${err.message} ${culprit}`)
+      })
   }
 
   return (
@@ -42,14 +53,14 @@ export default function AnswersForm({ questionId }) {
           Answer the question.
         </Form.Title>
         <Form.TextArea
-          rows='2'
+          rows={2}
           className={
             error ? 'form-control form-control-lg mt-3 is-invalid' : 'form-control form-control-lg mt-3'
           }
           value={answer}
           onChange={
-            ({ target }) => {
-              setAnswer(target.value)
+            (e) => {
+              setAnswer(e.target.value)
               setError('')
             }
           }
