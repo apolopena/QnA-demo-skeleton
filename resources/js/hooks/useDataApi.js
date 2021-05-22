@@ -9,7 +9,7 @@ const validEndpoint = (path) => {
 }
 
 const useDataApi = (url) => {
-  const [dataState, setDataState] = useState<Payload<Response>>({ data: null, isLoading: true })
+  const [dataState, setDataState] = useState({ data: null, isLoading: true })
   const [endpointUrl] = useState(url);
 
 useEffect(() => {
