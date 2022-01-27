@@ -11,6 +11,9 @@ all_zeros='^[0]+$'
 # Load spinner
 . .gp/bash/spinner.sh
 
+# Use this projects package json
+yarn install
+
 # remove unused scaffolding
 [[ -f resources/js/components/Example.js ]] && rm resources/js/components/Example.js
 [[ -f resources/views/welcome.blade.php ]] && rm resources/views/welcome.blade.php
